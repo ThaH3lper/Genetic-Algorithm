@@ -4,14 +4,18 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Genetic_Algorithm
 {
-    public class Game1 : Game
+    public class GAMain : Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
-        public Game1()
+        SimulationWorld world;
+
+        public GAMain()
         {
             graphics = new GraphicsDeviceManager(this);
+            graphics.PreferredBackBufferWidth = Globals.screenWidth;
+            graphics.PreferredBackBufferHeight = Globals.screenHeight;
             Content.RootDirectory = "Content";
         }
         protected override void Initialize()
@@ -21,7 +25,9 @@ namespace Genetic_Algorithm
 
         protected override void LoadContent()
         {
+            Globals.Load(this);
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            world = new SimulationWorld();
         }
 
         protected override void UnloadContent()
@@ -35,12 +41,16 @@ namespace Genetic_Algorithm
             if (KeyMouseReader.KeyClick(Keys.Escape))
                 Exit();
 
+            float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            world.Update(delta);
+
             base.Update(gameTime);
         }
 
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+            world.Draw(spriteBatch);
 
             base.Draw(gameTime);
         }

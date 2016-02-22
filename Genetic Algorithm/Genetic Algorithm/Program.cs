@@ -14,7 +14,7 @@ namespace Genetic_Algorithm
         [STAThread]
         static void Main()
         {
-            using (var game = new Game1())
+            using (var game = new GAMain())
                 game.Run();
         }
     }
