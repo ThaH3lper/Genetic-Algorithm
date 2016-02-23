@@ -16,7 +16,9 @@ namespace Genetic_Algorithm
         Vector2 velocity;
         float jumpPower;
         protected int jumps;
-        bool roatationHigher, left;
+        bool roatationHigher;
+        protected bool left;
+        bool dead;
 
         public Entity(SimulationWorld world, Vector2 pos) : base(world, new Rectangle(0, 0, 32, 32), new Rectangle(0, 0, 32, 32), Globals.sheet)
         {
@@ -25,6 +27,7 @@ namespace Genetic_Algorithm
             rotation = 0;
             left = true;
             origin = new Vector2(recHit.Width / 2, recHit.Height / 2);
+            dead = false;
 
         }
         public override void Update(float delta)
@@ -54,6 +57,8 @@ namespace Genetic_Algorithm
 
             if(world.IsEntityOnTrampoline(this, left))
                 Jump();
+            if (pos.Y > Globals.screenHeight + recHit.Height)
+                dead = true;
         }
 
         public void SetNextGene(Gene gene)
@@ -80,6 +85,10 @@ namespace Genetic_Algorithm
             left = (!left);
         }
         protected int GetJumps() { return jumps; }
+
+        public Vector2 GetPos() { return pos; }
+
+        public bool IsDead() { return dead; }
 
         public override void Draw(SpriteBatch spriteBatch)
         {

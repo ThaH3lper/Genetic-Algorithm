@@ -19,6 +19,8 @@ namespace Genetic_Algorithm
 
         public static float maxJumpPower = 17, minJumpPower = 10;
 
+        public static Vector2 startPos = new Vector2(200, 100);
+
         public static bool debug = false;
 
         public static void Load(GAMain gaMain)

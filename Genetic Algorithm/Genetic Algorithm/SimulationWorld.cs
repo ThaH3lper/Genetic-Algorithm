@@ -7,45 +7,45 @@ namespace Genetic_Algorithm
 {
     public class SimulationWorld
     {
-        List<GameObject> gameObjects;
+        Population popultion;
         Trampolin leftTramp, rightTramp;
 
         public SimulationWorld()
         {
-            gameObjects = new List<GameObject>();
-
-            for (int i = 0; i < 1000; i++)
-            {
-                AddGameObject(new AIEntity(this, new Vector2(200, 100)));
-            }
-
-            InitTrampolins();
+            popultion = new Population(this, 1000);
+            InitTramps();
         }
-
-        public void AddGameObject(GameObject o)
+        public void Reset()
         {
-            gameObjects.Add(o);
+            InitTramps();
         }
-
-        public void InitTrampolins()
+        public void InitTramps()
         {
             leftTramp = new Trampolin(this, new Vector2(320, 500), 120, 1.5f);
-            AddGameObject(leftTramp);
             rightTramp = new Trampolin(this, new Vector2(960, 500), 180, 2f);
-            AddGameObject(rightTramp);
         }
 
         public void Update(float delta)
         {
-            foreach (GameObject o in gameObjects)
-                o.Update(delta);
+            popultion.Update(delta);
+            leftTramp.Update(delta);
+            rightTramp.Update(delta);
+            if(popultion.IsDead())
+            {
+                popultion.SortAfterFitness();
+                popultion.BreadPopulation();
+                Reset();
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Begin();
-            foreach (GameObject o in gameObjects)
-                o.Draw(spriteBatch);
+
+            popultion.Draw(spriteBatch);
+            leftTramp.Draw(spriteBatch);
+            rightTramp.Draw(spriteBatch);
+
             spriteBatch.End();
         }
 
@@ -62,6 +62,14 @@ namespace Genetic_Algorithm
                     return true;
             }
             return false;
+        }
+
+        public float GetDistansTo(Entity e, bool left)
+        {
+            if (left)
+                return (e.GetPos() - leftTramp.GetPos()).Length();
+            else
+                return (e.GetPos() - rightTramp.GetPos()).Length();
         }
     }
 }

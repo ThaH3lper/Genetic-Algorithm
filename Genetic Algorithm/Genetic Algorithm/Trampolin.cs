@@ -27,6 +27,8 @@ namespace Genetic_Algorithm
             recHit.Y = (int)(newpos.Y);
         }
 
+        public Vector2 GetPos() { return pos; }
+
         public override void Draw(SpriteBatch spriteBatch)
         {
             base.Draw(spriteBatch);

@@ -11,13 +11,17 @@ namespace Genetic_Algorithm
     {
         Genome genome;
         int lastJump;
+        float fittingLevel, range;
 
-        public AIEntity(SimulationWorld world, Vector2 pos) : base(world, pos)
+        public AIEntity(SimulationWorld world) : this(world, new Genome(10)) { }
+        public AIEntity(SimulationWorld world, Genome genome) : base(world, Globals.startPos)
         {
-            genome = new Genome(10);
+            this.genome = genome;
+            fittingLevel = 0;
             lastJump = 0;
             SetNextGene(genome.GetGene(lastJump));
         }
+        
 
         public override void Update(float delta)
         {
@@ -26,9 +30,17 @@ namespace Genetic_Algorithm
             {
                 lastJump = jumps;
                 SetNextGene(genome.GetGene(jumps));
+                range = 0;
             }
-            
+            float distance = world.GetDistansTo(this, left);
+            float temp = 1 - (((distance > 1200.0f) ? 1200.0f : distance) / 1200.0f);
+            range = (temp > range) ? temp : range;
+
+            fittingLevel = lastJump + range;  
         }
+        public float GetFittingLevel() { return fittingLevel; }
+
+        public Genome GetGenome() { return genome; }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
