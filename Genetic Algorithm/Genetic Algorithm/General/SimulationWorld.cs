@@ -9,32 +9,34 @@ namespace Genetic_Algorithm
     {
         Population popultion;
         Trampolin leftTramp, rightTramp;
+        Blocker blocker;
 
         public SimulationWorld()
         {
-            popultion = new Population(this, 1000);
-            InitTramps();
+            popultion = new Population(this, 500);
+            InitWorld();
         }
-        public void Reset()
-        {
-            InitTramps();
-        }
-        public void InitTramps()
+        public void InitWorld()
         {
             leftTramp = new Trampolin(this, new Vector2(320, 500), 120, 1.5f);
             rightTramp = new Trampolin(this, new Vector2(960, 500), 180, 2f);
+            blocker = new Blocker(this, new Vector2(Globals.screenWidth/2, 500), 300);
         }
 
         public void Update(float delta)
         {
-            popultion.Update(delta);
             leftTramp.Update(delta);
             rightTramp.Update(delta);
+            blocker.Update(delta);
+
+            popultion.Update(delta);
+
             if(popultion.IsDead())
             {
                 popultion.SortAfterFitness();
-                popultion.BreadPopulation();
-                Reset();
+                popultion.Breed();
+                popultion.Mutate(0.05f, 0.6f);
+                InitWorld();
             }
         }
 
@@ -45,6 +47,7 @@ namespace Genetic_Algorithm
             popultion.Draw(spriteBatch);
             leftTramp.Draw(spriteBatch);
             rightTramp.Draw(spriteBatch);
+            blocker.Draw(spriteBatch);
 
             spriteBatch.End();
         }
@@ -62,6 +65,13 @@ namespace Genetic_Algorithm
                     return true;
             }
             return false;
+        }
+
+        public Blocker IsEntityCollidingBlocker(Entity e)
+        {
+            if (blocker.GetRecHit().Intersects(e.GetRecHit()))
+                return blocker;
+            return null;
         }
 
         public float GetDistansTo(Entity e, bool left)

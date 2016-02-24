@@ -13,7 +13,7 @@ namespace Genetic_Algorithm
         int lastJump;
         float fittingLevel, range;
 
-        public AIEntity(SimulationWorld world) : this(world, new Genome(10)) { }
+        public AIEntity(SimulationWorld world) : this(world, new Genome(30)) { }
         public AIEntity(SimulationWorld world, Genome genome) : base(world, Globals.startPos)
         {
             this.genome = genome;
@@ -21,11 +21,17 @@ namespace Genetic_Algorithm
             lastJump = 0;
             SetNextGene(genome.GetGene(lastJump));
         }
-        
+
+        public void UpdateMutation()
+        {
+            SetNextGene(genome.GetGene(lastJump));
+        }
 
         public override void Update(float delta)
         {
             base.Update(delta);
+            if (dead)
+                return;
             if(lastJump != jumps)
             {
                 lastJump = jumps;

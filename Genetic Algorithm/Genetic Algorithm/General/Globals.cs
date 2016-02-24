@@ -12,12 +12,12 @@ namespace Genetic_Algorithm
         public static Texture2D sheet, pixel;
         public static int screenWidth = 1280, screenHeight = 720;
 
-        public static float gravity = 15f;
-        public static float rotationSpeed = 10f;
+        public static float gravity = 1000f;
+        public static float rotationSpeed = 20f;
 
         public static Random rand = new Random();
 
-        public static float maxJumpPower = 17, minJumpPower = 10;
+        public static float maxJumpPower = 1200, minJumpPower = 700;
 
         public static Vector2 startPos = new Vector2(200, 100);
 

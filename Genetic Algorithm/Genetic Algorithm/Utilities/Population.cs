@@ -43,13 +43,22 @@ namespace Genetic_Algorithm
             SortAlgorithm.MergeSort(entitys, 0, entitys.Length - 1);
         }
 
-        public void BreadPopulation()
+        public void Breed()
         {
             dead.Clear();
-            Genome g = entitys[0].GetGenome();
-            for (int i = 0; i < entitys.Length; i++)
-                entitys[i] = new AIEntity(world, g);
+            BreedMachine.Breed(world, entitys);
         }
+
+        public void Mutate(float percentageOfGeneMutation, float realValueMutation)
+        {
+            foreach (AIEntity entity in entitys)
+            {
+                entity.GetGenome().Mutate(percentageOfGeneMutation, realValueMutation);
+                entity.UpdateMutation();
+            }
+        }
+
+        public AIEntity[] GetEntitys() { return entitys; }
 
         public void Draw(SpriteBatch spriteBatch)
         {

@@ -16,9 +16,9 @@ namespace Genetic_Algorithm
         Vector2 velocity;
         float jumpPower;
         protected int jumps;
-        bool roatationHigher;
         protected bool left;
-        bool dead;
+        protected bool dead;
+        public bool Selected = false;
 
         public Entity(SimulationWorld world, Vector2 pos) : base(world, new Rectangle(0, 0, 32, 32), new Rectangle(0, 0, 32, 32), Globals.sheet)
         {
@@ -32,55 +32,72 @@ namespace Genetic_Algorithm
         }
         public override void Update(float delta)
         {
-            velocity.Y += delta * Globals.gravity;
-            pos += velocity;
+            velocity.Y += Globals.gravity * delta;
 
-            recHit.X = (int)(pos.X - recHit.Width/2);
-            recHit.Y = (int)(pos.Y - recHit.Height);
+            yAxisUpdate(delta);
+            xAxisUpdate(delta);
 
-            if (roatationHigher)
-            {
-                if (rotation < nextRotation)
-                    rotation += delta * Globals.rotationSpeed;
-                else
-                    rotation = nextRotation;
-            }
-            else
-            {
-                if (rotation > nextRotation)
-                    rotation -= delta * Globals.rotationSpeed;
-                else
-                    rotation = nextRotation;
-            }
-
+            rotation = nextRotation;
             rotationRec = new Rectangle((int)(recHit.X + origin.X), (int)(recHit.Y + origin.Y), recHit.Width, recHit.Height);
 
-            if(world.IsEntityOnTrampoline(this, left))
+            if (world.IsEntityOnTrampoline(this, left))
                 Jump();
             if (pos.Y > Globals.screenHeight + recHit.Height)
                 dead = true;
         }
 
+        public void xAxisUpdate(float delta)
+        {
+            pos.X += velocity.X * delta;
+            recHit.X = (int)(pos.X - recHit.Width / 2);
+            Blocker blocker = world.IsEntityCollidingBlocker(this);
+            if (blocker != null)
+            {
+                if(velocity.X >= 0)
+                    pos.X = blocker.GetRecHit().X - recHit.Width / 2;
+                else
+                    pos.X = blocker.GetRecHit().X + blocker.GetRecHit().Width + recHit.Width / 2;
+
+                velocity.X = 0f;
+                recHit.X = (int)(pos.X - recHit.Width / 2);
+            }
+
+        }
+
+        public void yAxisUpdate(float delta)
+        {
+            pos.Y += velocity.Y * delta;
+            recHit.Y = (int)(pos.Y - recHit.Height);
+            Blocker blocker = world.IsEntityCollidingBlocker(this);
+            if (blocker != null)
+            {
+                if (velocity.Y > 0)
+                {
+                    pos.Y = blocker.GetRecHit().Y - 5;
+                    velocity.Y *= -1f;
+                }
+                else
+                {
+                    pos.Y = blocker.GetRecHit().Y + blocker.GetRecHit().Height + recHit.Height + 5;
+                    velocity.Y = 0;
+                }
+                recHit.Y = (int)(pos.Y - recHit.Height);
+            }
+        }
+
         public void SetNextGene(Gene gene)
         {
             jumpPower = gene.jumpPower;
-            if (rotation < Math.PI)
-            {
-                roatationHigher = true;
-                nextRotation = gene.rotation + (float)(Math.PI * 2);
-            }
-            else
-            {
-                nextRotation = gene.rotation;
-                roatationHigher = false;
-            }
+            nextRotation = gene.rotation;
         }
 
         public void Jump()
         {
             Vector2 angleVector = new Vector2((float)Math.Sin(rotation), (float)-Math.Cos(rotation));
             angleVector.Normalize();
+
             velocity = jumpPower * angleVector;
+
             jumps++;
             left = (!left);
         }
@@ -92,10 +109,10 @@ namespace Genetic_Algorithm
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            if (Globals.debug)
+            if (Globals.debug || Selected)
             {
                 spriteBatch.Draw(Globals.pixel, recHit, Color.FromNonPremultiplied(255, 0, 0, 150));
-                spriteBatch.Draw(Globals.pixel, new Rectangle((int)pos.X, (int)pos.Y, 5, 5), Color.FromNonPremultiplied(0, 255, 0, 255));
+                spriteBatch.Draw(Globals.pixel, new Rectangle((int)pos.X, (int)pos.Y, 20, 20), Color.FromNonPremultiplied(0, 255, 0, 255));
             }
 
             spriteBatch.Draw(texture, rotationRec, recDraw, color, rotation, origin, SpriteEffects.None, 1f);
