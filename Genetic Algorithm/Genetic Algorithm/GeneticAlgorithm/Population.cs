@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +13,10 @@ namespace Genetic_Algorithm
         List<AIEntity> dead;
 
         SimulationWorld world;
-
+        int amount;
         public Population(SimulationWorld world, int amount)
         {
+            this.amount = amount;
             this.world = world;
             entitys = new AIEntity[amount];
             dead = new List<AIEntity>();
@@ -43,18 +45,20 @@ namespace Genetic_Algorithm
             SortAlgorithm.MergeSort(entitys, 0, entitys.Length - 1);
         }
 
+        public int GetAmount() { return amount; }
+
         public void Breed()
         {
             dead.Clear();
-            BreedMachine.Breed(world, entitys);
+            BreedMachine.Breed(world, this);
         }
 
-        public void Mutate(float percentageOfGeneMutation, float realValueMutation)
+        public void Mutate(float percentageOfGeneMutation)
         {
-            foreach (AIEntity entity in entitys)
+            for (int i = 1; i < amount; i++)
             {
-                entity.GetGenome().Mutate(percentageOfGeneMutation, realValueMutation);
-                entity.UpdateMutation();
+                entitys[i].GetGenome().Mutate(percentageOfGeneMutation);
+                entitys[i].UpdateMutation();
             }
         }
 
@@ -64,6 +68,7 @@ namespace Genetic_Algorithm
         {
             foreach (AIEntity e in entitys)
                 e.Draw(spriteBatch);
+            spriteBatch.DrawString(Globals.font, "Living: " + (amount - dead.Count), new Vector2(0, 0), Color.Black);
         }
     }
 }

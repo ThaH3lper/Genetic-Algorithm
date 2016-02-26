@@ -13,7 +13,7 @@ namespace Genetic_Algorithm
         int lastJump;
         float fittingLevel, range;
 
-        public AIEntity(SimulationWorld world) : this(world, new Genome(30)) { }
+        public AIEntity(SimulationWorld world) : this(world, new Genome(105)) { }
         public AIEntity(SimulationWorld world, Genome genome) : base(world, Globals.startPos)
         {
             this.genome = genome;

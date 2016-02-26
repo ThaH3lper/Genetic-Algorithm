@@ -17,6 +17,8 @@ namespace Genetic_Algorithm
 
         public static Random rand = new Random();
 
+        public static SpriteFont font;
+
         public static float maxJumpPower = 1200, minJumpPower = 700;
 
         public static Vector2 startPos = new Vector2(200, 100);
@@ -27,6 +29,7 @@ namespace Genetic_Algorithm
         {
             sheet = gaMain.Content.Load<Texture2D>("Sheet");
             pixel = gaMain.Content.Load<Texture2D>("pixel");
+            font = gaMain.Content.Load<SpriteFont>("spriteFont");
         }
     }
 }

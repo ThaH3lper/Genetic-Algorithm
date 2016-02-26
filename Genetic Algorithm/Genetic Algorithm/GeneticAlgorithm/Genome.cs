@@ -38,12 +38,12 @@ namespace Genetic_Algorithm
             return new Genome(temp, amount);
         }
 
-        public void Mutate(float percentOfGene, float realValueMutation)
+        public void Mutate(float percentOfGene)
         {
             for (int i = 0; i < genes.Count; i++)
             {
                 if(percentOfGene > Globals.rand.NextDouble())
-                    genes[i].RealValueMutation(realValueMutation);
+                    genes[i].RealValueMutation();
             }
 
         }

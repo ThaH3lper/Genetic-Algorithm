@@ -34,8 +34,9 @@ namespace Genetic_Algorithm
             if(popultion.IsDead())
             {
                 popultion.SortAfterFitness();
+                Logger.LoggPopulation(popultion);
                 popultion.Breed();
-                popultion.Mutate(0.05f, 0.6f);
+                popultion.Mutate(0.04f);
                 InitWorld();
             }
         }

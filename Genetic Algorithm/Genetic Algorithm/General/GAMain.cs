@@ -17,6 +17,8 @@ namespace Genetic_Algorithm
             graphics.PreferredBackBufferWidth = Globals.screenWidth;
             graphics.PreferredBackBufferHeight = Globals.screenHeight;
             Content.RootDirectory = "Content";
+
+            Logger.ResetAll();
         }
         protected override void Initialize()
         {
@@ -42,6 +44,7 @@ namespace Genetic_Algorithm
                 Exit();
 
             float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            delta *= 2.2f;
             world.Update(delta);
 
             base.Update(gameTime);
