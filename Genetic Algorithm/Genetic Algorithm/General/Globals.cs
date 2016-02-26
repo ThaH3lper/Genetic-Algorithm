@@ -29,7 +29,7 @@ namespace Genetic_Algorithm
         {
             sheet = gaMain.Content.Load<Texture2D>("Sheet");
             pixel = gaMain.Content.Load<Texture2D>("pixel");
-            font = gaMain.Content.Load<SpriteFont>("spriteFont");
+            font = gaMain.Content.Load<SpriteFont>("font");
         }
     }
 }
