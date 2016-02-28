@@ -7,6 +7,10 @@ namespace Genetic_Algorithm
 {
     class BreedMachine
     {
+        public void Brred()
+        {
+
+        }
         public static void Breed(SimulationWorld world, Population population)
         {
             AIEntity[] entitys = population.GetEntitys();
@@ -53,7 +57,6 @@ namespace Genetic_Algorithm
             int newIndex = populationAmount - newEntityIndex - 1;
             entitys[newIndex] = new AIEntity(world, c);
             entitys[newIndex - 1] = new AIEntity(world, d);
-            //Console.WriteLine(newIndex + " " + (newIndex - 1) + " <- ");
         }
      }
 }

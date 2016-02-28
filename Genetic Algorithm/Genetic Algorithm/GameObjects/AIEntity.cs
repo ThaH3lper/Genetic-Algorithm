@@ -13,7 +13,7 @@ namespace Genetic_Algorithm
         int lastJump;
         float fittingLevel, range;
 
-        public AIEntity(SimulationWorld world) : this(world, new Genome(105)) { }
+        public AIEntity(SimulationWorld world) : this(world, new Genome(150)) { }
         public AIEntity(SimulationWorld world, Genome genome) : base(world, Globals.startPos)
         {
             this.genome = genome;
@@ -37,6 +37,8 @@ namespace Genetic_Algorithm
                 lastJump = jumps;
                 SetNextGene(genome.GetGene(jumps));
                 range = 0;
+                if (Globals.amountJumps < lastJump)
+                    Globals.amountJumps = lastJump;
             }
             float distance = world.GetDistansTo(this, left);
             float temp = 1 - (((distance > 1200.0f) ? 1200.0f : distance) / 1200.0f);

@@ -23,13 +23,15 @@ namespace Genetic_Algorithm
 
         public static Vector2 startPos = new Vector2(200, 100);
 
+        public static int amountJumps = 0;
+
         public static bool debug = false;
 
         public static void Load(GAMain gaMain)
         {
             sheet = gaMain.Content.Load<Texture2D>("Sheet");
             pixel = gaMain.Content.Load<Texture2D>("pixel");
-            font = gaMain.Content.Load<SpriteFont>("spriteFont");
+            font = gaMain.Content.Load<SpriteFont>("font");
         }
     }
 }

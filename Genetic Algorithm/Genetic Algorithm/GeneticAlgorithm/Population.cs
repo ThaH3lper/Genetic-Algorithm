@@ -57,7 +57,8 @@ namespace Genetic_Algorithm
         {
             for (int i = 1; i < amount; i++)
             {
-                entitys[i].GetGenome().Mutate(percentageOfGeneMutation);
+                entitys[i].GetGenome().New_Mutate(percentageOfGeneMutation);
+                //entitys[i].GetGenome().Mutate(percentageOfGeneMutation);
                 entitys[i].UpdateMutation();
             }
         }

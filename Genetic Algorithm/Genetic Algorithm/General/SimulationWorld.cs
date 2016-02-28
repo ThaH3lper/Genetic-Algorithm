@@ -36,7 +36,8 @@ namespace Genetic_Algorithm
                 popultion.SortAfterFitness();
                 Logger.LoggPopulation(popultion);
                 popultion.Breed();
-                popultion.Mutate(0.04f);
+                popultion.Mutate(0.15f);
+                System.Console.WriteLine("Amount of jumps: " + Globals.amountJumps);
                 InitWorld();
             }
         }

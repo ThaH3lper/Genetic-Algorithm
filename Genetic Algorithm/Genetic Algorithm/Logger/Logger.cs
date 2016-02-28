@@ -15,7 +15,7 @@ namespace Genetic_Algorithm
             WriteLine("Best.txt", population.GetEntitys()[0].GetFittingLevel().ToString());
 
             //Baddest            
-            WriteLine("Baddest.txt", population.GetEntitys()[population.GetAmount()-1].GetFittingLevel().ToString());
+            WriteLine("Worst.txt", population.GetEntitys()[population.GetAmount()-1].GetFittingLevel().ToString());
 
             //Median
             WriteLine("Median.txt", population.GetEntitys()[population.GetAmount()/2].GetFittingLevel().ToString());
@@ -44,7 +44,7 @@ namespace Genetic_Algorithm
         public static void ResetAll()
         {
             Reset("Best.txt");
-            Reset("Baddest.txt");
+            Reset("Worst.txt");
             Reset("Median.txt");
             Reset("Avrage.txt");
             Reset("StandardDeviation.txt");

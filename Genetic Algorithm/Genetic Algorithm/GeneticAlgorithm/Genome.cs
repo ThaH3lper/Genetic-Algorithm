@@ -47,9 +47,21 @@ namespace Genetic_Algorithm
             }
 
         }
+        public void New_Mutate(float percentOfGene)
+        {
+            int start = Globals.amountJumps - 3;
+            for (int i = (start < 0) ? 0 : start; i < genes.Count; i++)
+            {
+                if (percentOfGene > Globals.rand.NextDouble())
+                    genes[i].RealValueMutation();
+            }
+
+        }
 
         public Gene GetGene(int index)
         {
+            if (index >= amount)
+                return genes.ElementAt(amount - 1);
             return genes.ElementAt(index);
         }
 
