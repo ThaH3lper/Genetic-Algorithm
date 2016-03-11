@@ -9,10 +9,18 @@ namespace Genetic_Algorithm
 {
     public class Trampolin : GameObject
     {
-        Vector2 pos;
-        float rotation;
-        float speed;
-        float radian;
+        private Vector2 pos;    //The position of trampoline.
+        private float rotation; //The current rotation.
+        private float speed;    //The rotation speed.
+        private float radian;   //The radian for rotation.
+
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        /// <param name="world">The world to spawn to.</param>
+        /// <param name="pos">The position of trampoline.</param>
+        /// <param name="radian">The radian of the circulation.</param>
+        /// <param name="speed">The speed of the circultaion.</param>
         public Trampolin(SimulationWorld world, Vector2 pos, float radian, float speed) : base(world, new Rectangle(0, 0, 40, 10), new Rectangle(0, 0, 1, 1), Globals.pixel)
         {
             this.pos = pos;
@@ -27,6 +35,10 @@ namespace Genetic_Algorithm
             recHit.Y = (int)(newpos.Y);
         }
 
+        /// <summary>
+        /// Return the position of trampoline.
+        /// </summary>
+        /// <returns>The postion of trampoline.</returns>
         public Vector2 GetPos() { return pos; }
 
         public override void Draw(SpriteBatch spriteBatch)

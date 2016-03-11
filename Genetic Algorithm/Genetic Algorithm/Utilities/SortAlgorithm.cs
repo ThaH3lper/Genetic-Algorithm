@@ -7,6 +7,14 @@ namespace Genetic_Algorithm
 {
     class SortAlgorithm
     {
+
+        /// <summary>
+        /// Mergesort 2 lists.
+        /// </summary>
+        /// <param name="entitys">The entity list to sort.</param>
+        /// <param name="left">The left index.</param>
+        /// <param name="mid">The middle index.</param>
+        /// <param name="right">The right index.</param>
         public static void DoMerge(AIEntity[] entitys, int left, int mid, int right)
         {
             AIEntity[] temp = new AIEntity[entitys.Length];
@@ -18,7 +26,7 @@ namespace Genetic_Algorithm
 
             while ((left <= left_end) && (mid <= right))
             {
-                if (entitys[left].GetFittingLevel() >= entitys[mid].GetFittingLevel())
+                if (entitys[left].GetFittingValue() >= entitys[mid].GetFittingValue())
                     temp[tmp_pos++] = entitys[left++];
                 else
                     temp[tmp_pos++] = entitys[mid++];
@@ -37,6 +45,12 @@ namespace Genetic_Algorithm
             }
         }
 
+        /// <summary>
+        /// Mergesort entitys by fitnessvalue.
+        /// </summary>
+        /// <param name="entitys">The entitys array to sort.</param>
+        /// <param name="left">The left index.</param>
+        /// <param name="right">The right index.</param>
         static public void MergeSort(AIEntity[] entitys, int left, int right)
         {
             int mid;

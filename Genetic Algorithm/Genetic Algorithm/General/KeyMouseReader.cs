@@ -2,6 +2,9 @@
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
 
+/// <summary>
+/// Basic class to handle input.
+/// </summary>
 static class KeyMouseReader
 {
 	public static KeyboardState keyState, oldKeyState = Keyboard.GetState();

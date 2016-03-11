@@ -9,12 +9,18 @@ namespace Genetic_Algorithm
 {
     public class Blocker : GameObject
     {
-        Vector2 pos;
-        Vector2 orginalPos;
-        float upMovement;
-        float speed;
-        float velocity;
+        private Vector2 pos;            //The current position
+        private Vector2 orginalPos;     //The original position.
+        private float upMovement;       //The range to move up and down.
+        private float speed;            //The speed to move up and down.
+        private float velocity;         //The current velocity.
 
+        /// <summary>
+        /// Constuctor.
+        /// </summary>
+        /// <param name="world">The world to spawn block in.</param>
+        /// <param name="pos">The position.</param>
+        /// <param name="upMovement">The amount to move up.</param>
         public Blocker(SimulationWorld world, Vector2 pos, float upMovement) : base(world, new Rectangle(0, 0, 50, 200), new Rectangle(0, 0, 1, 1), Globals.pixel)
         {
             speed = 100;
